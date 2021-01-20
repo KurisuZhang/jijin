@@ -24,4 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install numpy
     - name: Display Python version
-      run: python -c "import sys; print(sys.version)"
+      run: |
+        python -c "import sys; print(sys.version)"
+        python test.py
