@@ -6,6 +6,10 @@
 name: Python package
 
 on:
+  push:
+    branches:
+    - main
+    - release/*
   schedule:
   - cron: "16 9 * * MON-FRI"
 
