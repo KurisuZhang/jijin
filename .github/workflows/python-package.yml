@@ -7,7 +7,7 @@ name: Python package
 
 on:
   schedule:
-  - cron: "10 8 * * MON-FRI"
+  - cron: "50 8 * * MON-FRI"
 
 jobs:
   build:
@@ -17,6 +17,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set up Python 3.7
       uses: actions/setup-python@v2
+      env:
+        SERVERJIANG: ${{ secrets.SERVERJIANG }}
       with:
         python-version: '3.7'
     - name: Install dependencies
@@ -24,10 +26,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install numpy
         pip install requests
-      env:
-        SERVERJIANG: ${{ secrets.SERVERJIANG }}
     - name: Display Python version
       run: |
+        echo $SERVERJIANG
         python -c "import sys; print(sys.version)"
         python test.py
         date
