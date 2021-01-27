@@ -4,7 +4,7 @@ name: CI
 
 on:
   schedule:
-  - cron: "0 5 * * MON-FRI"
+  - cron: "20 6 * * MON-FRI"
 
 jobs:
   build:
