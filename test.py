@@ -37,8 +37,15 @@ for fund_name in my_funds:
     fond_re = re.match('jsonpgz\((.*)\)', response.text)
     fond_re = fond_re.group(1)
     fond_dict = json.loads(fond_re)
-    valuation[fund_name] = float(fond_dict["gszzl"])
-    markdown_format = markdown_format + "**"+ fund_name +"**" + ":  " + fond_dict["gszzl"] + "  \n"
+    guess_persent = float(fond_dict["gszzl"])
+    valuation[fund_name] = guess_persent
+    markdown_format = markdown_format + "**"+ fund_name +"**" + ":  " + fond_dict["gszzl"]
+    if guess_persent <= 0:
+        markdown_format = markdown_format +"  📉  "
+        markdown_format = markdown_format + round(abs(guess_persent))* "🟢" + "  \n"
+    else:
+        markdown_format = markdown_format +"  📈  "
+        markdown_format = markdown_format + round(abs(guess_persent))* "🔴" + "  \n"
 
 
 # In[7]:
