@@ -25,6 +25,7 @@ import re
 
 env_dist = os.environ
 my_funds = {"易方达蓝筹精选混合":"005827","华宝科技ETF联接C":"007874","华宝券商ETF联接C":"007531","诺安成长混合":"320007","华夏中证5G通信主题ETF联接C":"008087"}
+headers = {"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"}
 valuation = {}
 markdown_format = ""
 
@@ -33,12 +34,20 @@ markdown_format = ""
 
 
 for fund_name in my_funds:
-    response = requests.get("http://fundgz.1234567.com.cn/js/" + my_funds[fund_name] + ".js")
+    
+    for i in range(3):
+        try:
+            response = requests.get("http://fundgz.1234567.com.cn/js/" + my_funds[fund_name] + ".js",headers=headers,timeout=5)
+            break
+        except Exception as e:
+            print(e)
+    
     fond_re = re.match('jsonpgz\((.*)\)', response.text)
     fond_re = fond_re.group(1)
     fond_dict = json.loads(fond_re)
     guess_persent = float(fond_dict["gszzl"])
     valuation[fund_name] = guess_persent
+    
     markdown_format = markdown_format + "**"+ fund_name +"**" + ":  " + fond_dict["gszzl"]
     if guess_persent <= 0:
         markdown_format = markdown_format +"  📉  "
