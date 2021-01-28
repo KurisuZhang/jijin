@@ -5,12 +5,13 @@ on:
     branches:
       - master
   schedule:
-      - cron: "30 14 * * 1-5"
+      - cron: "20 6 * * 1-5"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      SCKEY: ${{ secrets.SERVERJIANG }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.7
@@ -22,8 +23,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
     - name: Display Python version
-      env:
-        SCKEY: ${{ secrets.SERVERJIANG }}
       run: |
         python test.py
         date
