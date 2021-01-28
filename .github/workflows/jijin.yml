@@ -1,0 +1,29 @@
+name: jijin
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+      - cron: "55 13 * * MON-FRI"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+    - name: Display Python version
+      env:
+        SCKEY: ${{ secrets.SERVERJIANG }}
+      run: |
+        python test.py
+        date
